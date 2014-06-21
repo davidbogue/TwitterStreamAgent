@@ -40,7 +40,7 @@ public class StreamReader {
         StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 
         // Set the stocks to follow
-        List<String> terms = Lists.newArrayList("$AAPL", "$GOOG", "$FB", "$TWTR", "$LNKD");
+        List<String> terms = Lists.newArrayList("$AAPL", "$GOOG", "$FB", "$TWTR", "$LNKD", "$TSLA", "$KMX", "$RHT", "$AMZN");
         hosebirdEndpoint.trackTerms(terms);
 
         //OAuth1("consumerKey", "consumerSecret", "token", "secret");
