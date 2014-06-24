@@ -1,6 +1,7 @@
 package com.surmize.twitterstream;
 
-import com.google.common.collect.Lists;
+import com.surmize.dao.StockSymbolDAO;
+import com.surmize.models.StockSymbol;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
 import com.twitter.hbc.core.Constants;
@@ -10,9 +11,13 @@ import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
 import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StreamReader {
 
@@ -22,10 +27,12 @@ public class StreamReader {
             sr.openStream();
         } catch (InterruptedException ex) {
             ex.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(StreamReader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void openStream() throws InterruptedException {
+    public void openStream() throws InterruptedException, SQLException {
         /**
          * Set up your blocking queues: Be sure to size these properly based on
          * expected TPS of your stream
@@ -40,8 +47,7 @@ public class StreamReader {
         StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 
         // Set the stocks to follow
-        List<String> terms = Lists.newArrayList("$AAPL", "$GOOG", "$FB", "$TWTR", "$LNKD", "$TSLA", "$KMX", "$RHT", "$AMZN");
-        hosebirdEndpoint.trackTerms(terms);
+        hosebirdEndpoint.trackTerms( getStockTermList() );
 
         //OAuth1("consumerKey", "consumerSecret", "token", "secret");
         Authentication hosebirdAuth = new OAuth1(ApiProperties.getConsumerKey(),
@@ -71,6 +77,17 @@ public class StreamReader {
         processingThread3.start();
         
         System.out.println("Threads Started");
+    }
+    
+    private List<String> getStockTermList() throws SQLException{
+        List<String> terms = new ArrayList<>();
+        StockSymbolDAO stockDao = new StockSymbolDAO();
+        List<StockSymbol> symbols = stockDao.getTwitterStockSymbols();
+        for (StockSymbol stockSymbol : symbols) {
+            terms.add("$"+stockSymbol.symbol);
+            System.out.println("$"+stockSymbol.symbol);
+        }
+        return terms;
     }
 
 }
