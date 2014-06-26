@@ -25,7 +25,6 @@ public class MsgThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Inside Thread");
         while (!client.isDone()) {
             try {
                 String msg = msgQueue.take();
@@ -40,7 +39,6 @@ public class MsgThread implements Runnable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(MsgThread.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
     }
 
