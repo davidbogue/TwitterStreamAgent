@@ -19,16 +19,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class StreamReader {
+public class Agent {
 
     public static void main(String args[]) {
-        StreamReader sr = new StreamReader();
+        Agent sr = new Agent();
         try {
             sr.openStream();
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
-            Logger.getLogger(StreamReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Agent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

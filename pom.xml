@@ -44,7 +44,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.surmize.twitterstream.StreamReader</mainClass>
+                            <mainClass>com.surmize.twitterstream.Agent</mainClass>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
