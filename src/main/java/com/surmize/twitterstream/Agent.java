@@ -82,7 +82,7 @@ public class Agent {
     private List<String> getStockTermList() throws SQLException{
         List<String> terms = new ArrayList<>();
         StockSymbolDAO stockDao = new StockSymbolDAO();
-        List<StockSymbol> symbols = stockDao.getTwitterStockSymbols();
+        List<StockSymbol> symbols = stockDao.getActiveStockSymbols();
         for (StockSymbol stockSymbol : symbols) {
             terms.add("$"+stockSymbol.symbol);
             System.out.println("$"+stockSymbol.symbol);
