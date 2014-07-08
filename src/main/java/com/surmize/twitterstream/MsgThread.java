@@ -28,7 +28,6 @@ public class MsgThread implements Runnable {
         while (!client.isDone()) {
             try {
                 String msg = msgQueue.take();
-                System.out.println(msg);
                 Status status = getTweetFromJson(msg);
                 Tweet t = TweetDataMapper.getTweetFromStatus(status);
                 try {

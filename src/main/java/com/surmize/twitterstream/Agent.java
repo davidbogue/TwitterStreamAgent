@@ -75,7 +75,6 @@ public class Agent {
         
         Thread processingThread3 = new Thread(new MsgThread(client, msgQueue));
         processingThread3.start();
-        
         System.out.println("Threads Started");
     }
     
@@ -85,7 +84,6 @@ public class Agent {
         List<StockSymbol> symbols = stockDao.getActiveStockSymbols();
         for (StockSymbol stockSymbol : symbols) {
             terms.add("$"+stockSymbol.symbol);
-            System.out.println("$"+stockSymbol.symbol);
         }
         return terms;
     }
